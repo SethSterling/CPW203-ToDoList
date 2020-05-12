@@ -1,9 +1,9 @@
-#isCompleted{
+#is-completed{
     background-color: green;
     width: 30%;
 }
 
-#notCompleted{
+#not-completed{
     background-color: red;
     width: 30%
 }

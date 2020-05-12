@@ -75,9 +75,7 @@ function getToDoItem() {
  * @param item 
  */
 function displayToDoItem(item:ToDoItem):void {
-    let toDoList = getById("ToDo");
     let toDoItem = document.createElement("div");
-    toDoList.appendChild(toDoItem)
 
     let toDoTitle = document.createElement("h1");
     toDoTitle.innerText = item.title;
@@ -88,10 +86,10 @@ function displayToDoItem(item:ToDoItem):void {
     toDoItem.appendChild(toDoDueDate);
 
     if(item.isCompleted){
-        toDoItem.setAttribute("id", "isCompleted");
+        getById("is-completed").appendChild(toDoItem);
     }
     else{
-        toDoItem.setAttribute("id", "notCompleted");
+        getById("not-completed").appendChild(toDoItem);
     }
 }
 

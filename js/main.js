@@ -47,9 +47,7 @@ function getToDoItem() {
     }
 }
 function displayToDoItem(item) {
-    var toDoList = getById("ToDo");
     var toDoItem = document.createElement("div");
-    toDoList.appendChild(toDoItem);
     var toDoTitle = document.createElement("h1");
     toDoTitle.innerText = item.title;
     toDoItem.appendChild(toDoTitle);
@@ -57,9 +55,9 @@ function displayToDoItem(item) {
     toDoDueDate.innerText = "Due: " + item.dueDate;
     toDoItem.appendChild(toDoDueDate);
     if (item.isCompleted) {
-        toDoItem.setAttribute("id", "isCompleted");
+        getById("is-completed").appendChild(toDoItem);
     }
     else {
-        toDoItem.setAttribute("id", "notCompleted");
+        getById("not-completed").appendChild(toDoItem);
     }
 }
