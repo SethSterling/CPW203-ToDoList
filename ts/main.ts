@@ -2,7 +2,7 @@
 const picker = datepicker("#due-date");
 picker.setMin(new Date()); // Set to today's date
 
-window.onload{
+window.onload = function() {
     let addItemBtn = getById("add-item");
     addItemBtn.onclick = getToDoItem;
 }

@@ -1,10 +1,9 @@
 var picker = datepicker("#due-date");
 picker.setMin(new Date());
-window.onload;
-{
+window.onload = function () {
     var addItemBtn = getById("add-item");
     addItemBtn.onclick = getToDoItem;
-}
+};
 var ToDoItem = (function () {
     function ToDoItem(title, dueDate, isCompleted) {
         this.title = title;
