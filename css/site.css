@@ -5,6 +5,7 @@
 
 #not-completed > div{
     background-color: red;
+    cursor: pointer;
 }
 
 .todo{
@@ -13,6 +14,7 @@
     padding-left: .5em;
     padding-bottom: .05em;
     margin: 1em;
+    border-radius: 5%;
 }
 .todo h3, .todo p{
     margin: 0px;

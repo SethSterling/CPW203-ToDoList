@@ -86,12 +86,22 @@ function displayToDoItem(item:ToDoItem):void {
     toDoDueDate.innerText = "Due: " + item.dueDate;
     toDoItem.appendChild(toDoDueDate);
 
+    //If it is complete
     if(item.isCompleted){
         getById("is-completed").appendChild(toDoItem);
     }
+    //If it isn't complete
     else{
         getById("not-completed").appendChild(toDoItem);
+        toDoItem.onclick = markAsComplete;
     }
+}
+
+function markAsComplete() {
+    //Adds the div that was clicked to the "is-completed" div 
+    getById("is-completed").appendChild(this);
+    //Removes the div that was clicked to the "is-completed" div 
+    getById("not-completed").removeChild(this);
 }
 
 // Task: Allow user to mark a ToDoItem as Completed

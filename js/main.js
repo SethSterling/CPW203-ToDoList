@@ -59,5 +59,10 @@ function displayToDoItem(item) {
     }
     else {
         getById("not-completed").appendChild(toDoItem);
+        toDoItem.onclick = markAsComplete;
     }
+}
+function markAsComplete() {
+    getById("is-completed").appendChild(this);
+    getById("not-completed").removeChild(this);
 }
