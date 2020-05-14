@@ -1,5 +1,6 @@
 #is-completed > div{
     background-color: green;
+    opacity: 70%;
 }
 
 #not-completed > div{
@@ -11,7 +12,7 @@
     width: 30%;
     padding-left: .5em;
     padding-bottom: .05em;
-    margin: .3em;
+    margin: 1em;
 }
 .todo h3, .todo p{
     margin: 0px;
