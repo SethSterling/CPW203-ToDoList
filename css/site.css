@@ -1,9 +1,18 @@
-#is-completed{
+#is-completed > div{
     background-color: green;
-    width: 30%;
 }
 
-#not-completed{
+#not-completed > div{
     background-color: red;
-    width: 30%
+}
+
+.todo{
+    box-sizing: border-box;
+    width: 30%;
+    padding-left: .5em;
+    padding-bottom: .05em;
+    margin: .3em;
+}
+.todo h3, .todo p{
+    margin: 0px;
 }

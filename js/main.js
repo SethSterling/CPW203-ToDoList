@@ -47,7 +47,8 @@ function getToDoItem() {
 }
 function displayToDoItem(item) {
     var toDoItem = document.createElement("div");
-    var toDoTitle = document.createElement("h1");
+    toDoItem.setAttribute("class", "todo");
+    var toDoTitle = document.createElement("h3");
     toDoTitle.innerText = item.title;
     toDoItem.appendChild(toDoTitle);
     var toDoDueDate = document.createElement("p");

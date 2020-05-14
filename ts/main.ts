@@ -75,9 +75,10 @@ function getToDoItem() {
  * @param item 
  */
 function displayToDoItem(item:ToDoItem):void {
-    let toDoItem = document.createElement("div");
+    let toDoItem = document.createElement("div")
+    toDoItem.setAttribute("class", "todo")
 
-    let toDoTitle = document.createElement("h1");
+    let toDoTitle = document.createElement("h3");
     toDoTitle.innerText = item.title;
     toDoItem.appendChild(toDoTitle);
 
