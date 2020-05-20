@@ -1,3 +1,10 @@
+#is-completed, #not-completed{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 #is-completed > div{
     background-color: green;
     opacity: 70%;
