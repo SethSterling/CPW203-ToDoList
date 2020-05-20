@@ -2,12 +2,16 @@ var picker = datepicker("#due-date");
 picker.setMin(new Date());
 window.onload = function () {
     var addItemBtn = getById("add-item");
-    addItemBtn.onclick = getToDoItem;
-    loadSavedItem();
+    addItemBtn.onclick = getToDo;
+    loadSavedItems();
 };
-function loadSavedItem() {
-    var item = getToDo();
-    displayToDoItem(item);
+function loadSavedItems() {
+    var itemArray = getToDoItems();
+    if (itemArray != null) {
+        for (var i = 0; i < itemArray.length; i++) {
+            displayToDoItem(itemArray[i]);
+        }
+    }
 }
 var ToDoItem = (function () {
     function ToDoItem(title, dueDate, isCompleted) {
@@ -40,7 +44,7 @@ function clearErrors() {
     displayError("title", "*");
     displayError("due-date", "*");
 }
-function getToDoItem() {
+function getToDo() {
     clearErrors();
     var itemTitle = getById("title").value;
     var itemDueDate = getById("due-date").value;
@@ -73,11 +77,16 @@ function markAsComplete() {
     this.isCompleted = true;
 }
 function saveToDo(item) {
-    var itemString = JSON.stringify(item);
-    localStorage.setItem(todokey, itemString);
+    var currItems = getToDoItems();
+    if (currItems == null) {
+        currItems = new Array();
+    }
+    currItems.push(item);
+    var currItemsString = JSON.stringify(currItems);
+    localStorage.setItem(todokey, currItemsString);
 }
 var todokey = "todo";
-function getToDo() {
+function getToDoItems() {
     var itemString = localStorage.getItem(todokey);
     var item = JSON.parse(itemString);
     return item;

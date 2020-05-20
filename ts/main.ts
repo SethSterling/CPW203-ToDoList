@@ -4,16 +4,19 @@ picker.setMin(new Date()); // Set to today's date
 
 window.onload = function() {
     let addItemBtn = getById("add-item");
-    addItemBtn.onclick = getToDoItem;
+    addItemBtn.onclick = getToDo;
 
     //Loads saved item
-    loadSavedItem();
+    loadSavedItems();
 }
 
-function loadSavedItem() {
-    let item:ToDoItem = getToDo();
-
-    displayToDoItem(item);
+function loadSavedItems() {
+    let itemArray = getToDoItems();
+    if(itemArray != null){
+        for(let i = 0; i < itemArray.length; i++){
+            displayToDoItem(itemArray[i]);
+        }
+    }
 }
 
 class ToDoItem {
@@ -67,7 +70,7 @@ function clearErrors() {
 /**
  * Creates ToDoItem object
  */
-function getToDoItem() {
+function getToDo() {
     clearErrors();
     let itemTitle = (<HTMLInputElement>getById("title")).value;
     let itemDueDate = (<HTMLInputElement>getById("due-date")).value
@@ -115,19 +118,24 @@ function markAsComplete() {
     //getById("not-completed").removeChild(this);
 }
 
-function saveToDo(item:ToDoItem){
-    let itemString = JSON.stringify(item);
+function saveToDo(item:ToDoItem):void{
+    let currItems = getToDoItems();
+    if(currItems == null){
+        currItems = new Array();
+    }
+    currItems.push(item);
 
-    localStorage.setItem(todokey, itemString);
+    let currItemsString = JSON.stringify(currItems);
+    localStorage.setItem(todokey, currItemsString);
 }
 
 const todokey = "todo"
 /**
- * Get stored ToDo item or return null if none exist
+ * Get stored ToDo items or return null if none exist
  */
-function getToDo():ToDoItem{
+function getToDoItems():ToDoItem[]{
     let itemString = localStorage.getItem(todokey);
 
-    let item:ToDoItem = JSON.parse(itemString);
+    let item:ToDoItem[] = JSON.parse(itemString);
     return item;
 }
