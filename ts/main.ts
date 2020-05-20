@@ -5,6 +5,15 @@ picker.setMin(new Date()); // Set to today's date
 window.onload = function() {
     let addItemBtn = getById("add-item");
     addItemBtn.onclick = getToDoItem;
+
+    //Loads saved item
+    loadSavedItem();
+}
+
+function loadSavedItem() {
+    let item:ToDoItem = getToDo();
+
+    displayToDoItem(item);
 }
 
 class ToDoItem {
@@ -67,6 +76,7 @@ function getToDoItem() {
     if(isValid(itemTitle, itemDueDate)){
         let item = new ToDoItem(itemTitle, itemDueDate, itemCompleted);
         displayToDoItem(item);
+        saveToDo(item);
     }   
 }
 
@@ -100,8 +110,24 @@ function displayToDoItem(item:ToDoItem):void {
 function markAsComplete() {
     //Adds the div that was clicked to the "is-completed" div 
     getById("is-completed").appendChild(this);
+    this.isCompleted = true;
     //Removes the div that was clicked to the "is-completed" div 
-    getById("not-completed").removeChild(this);
+    //getById("not-completed").removeChild(this);
 }
 
-// Task: Allow user to mark a ToDoItem as Completed
+function saveToDo(item:ToDoItem){
+    let itemString = JSON.stringify(item);
+
+    localStorage.setItem(todokey, itemString);
+}
+
+const todokey = "todo"
+/**
+ * Get stored ToDo item or return null if none exist
+ */
+function getToDo():ToDoItem{
+    let itemString = localStorage.getItem(todokey);
+
+    let item:ToDoItem = JSON.parse(itemString);
+    return item;
+}
