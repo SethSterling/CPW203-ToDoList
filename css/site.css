@@ -26,3 +26,38 @@
 .todo h3, .todo p{
     margin: 0px;
 }
+
+#data-input{
+    background-color: #AFECFA;
+    display: block;
+    border: 3px solid #61FA24;
+    width: 15em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: .5em;
+}
+
+h1, h2{
+    text-align: center;
+    border-bottom: solid;
+    background-color: #D0F8BA;
+}
+
+input[type="text"]{
+    margin-bottom: 1em;
+}
+
+#due-date{
+    width: 8.5em;
+}
+
+input[type="button"]{
+    display: inline-block;
+    width: auto;
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+body{
+    background-color: #D0F8BA;
+}

@@ -42,12 +42,12 @@ function getById(id:string) {
 function isValid(title:string, dueDate:String):boolean {
     let isValid = true;
     if(title.trim() == ""){
-        displayError("title", "Title is Required");
+        displayError("title", "Required");
         isValid = false;
     }
 
     if(dueDate.trim() == ""){
-        displayError("due-date", "A due date is Required");
+        displayError("due-date", "Required");
         isValid = false;
     }
     
