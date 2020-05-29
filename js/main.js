@@ -14,7 +14,8 @@ function loadSavedItems() {
     }
 }
 var ToDoItem = (function () {
-    function ToDoItem(title, dueDate, isCompleted) {
+    function ToDoItem(id, title, dueDate, isCompleted) {
+        this.id = id;
         this.title = title;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
@@ -46,18 +47,23 @@ function clearErrors() {
 }
 function getToDo() {
     clearErrors();
+    var itemId = generateRandomNumber();
     var itemTitle = getById("title").value;
     var itemDueDate = getById("due-date").value;
     var itemCompleted = getById("is-complete").checked;
     if (isValid(itemTitle, itemDueDate)) {
-        var item = new ToDoItem(itemTitle, itemDueDate, itemCompleted);
+        var item = new ToDoItem(itemId, itemTitle, itemDueDate, itemCompleted);
         displayToDoItem(item);
         saveToDo(item);
     }
 }
+function generateRandomNumber() {
+    return Math.floor(Math.random() * 999999);
+}
 function displayToDoItem(item) {
     var toDoItem = document.createElement("div");
     toDoItem.setAttribute("class", "todo");
+    toDoItem.setAttribute("id", item.id.toString());
     var toDoTitle = document.createElement("h3");
     toDoTitle.innerText = item.title;
     toDoItem.appendChild(toDoTitle);
@@ -74,7 +80,8 @@ function displayToDoItem(item) {
 }
 function markAsComplete() {
     getById("is-completed").appendChild(this);
-    this.isCompleted = true;
+    var clickedItem = GetClickedItem(this);
+    updateItems(clickedItem);
 }
 function saveToDo(item) {
     var currItems = getToDoItems();
@@ -82,12 +89,33 @@ function saveToDo(item) {
         currItems = new Array();
     }
     currItems.push(item);
+    sendToLocalStroage(currItems);
+}
+var todokey = "todo";
+function sendToLocalStroage(currItems) {
     var currItemsString = JSON.stringify(currItems);
     localStorage.setItem(todokey, currItemsString);
 }
-var todokey = "todo";
 function getToDoItems() {
     var itemString = localStorage.getItem(todokey);
     var item = JSON.parse(itemString);
     return item;
+}
+function updateItems(item) {
+    var itemArray = getToDoItems();
+    for (var i = 0; i < itemArray.length; i++) {
+        if (item.id == (itemArray[i].id)) {
+            itemArray[i].isCompleted = true;
+        }
+        console.log(itemArray[i]);
+    }
+    sendToLocalStroage(itemArray);
+}
+function GetClickedItem(itemDiv) {
+    var itemArray = getToDoItems();
+    for (var i = 0; i < itemArray.length; i++) {
+        if (itemDiv.getAttribute("id") == itemArray[i].id.toString()) {
+            return itemArray[i];
+        }
+    }
 }

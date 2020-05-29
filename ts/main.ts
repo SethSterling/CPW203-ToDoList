@@ -20,11 +20,13 @@ function loadSavedItems() {
 }
 
 class ToDoItem {
+    id:number;
     title:string;
-    dueDate:String;
+    dueDate:string;
     isCompleted:boolean;
 
-    constructor(title:string, dueDate:String, isCompleted:boolean){
+    constructor(id:number, title:string, dueDate:string, isCompleted:boolean){
+        this.id = id;
         this.title = title;
         this.dueDate = dueDate;
         this.isCompleted = isCompleted;
@@ -72,15 +74,20 @@ function clearErrors() {
  */
 function getToDo() {
     clearErrors();
+    let itemId = generateRandomNumber();
     let itemTitle = (<HTMLInputElement>getById("title")).value;
     let itemDueDate = (<HTMLInputElement>getById("due-date")).value
     let itemCompleted = (<HTMLInputElement>getById("is-complete")).checked
 
     if(isValid(itemTitle, itemDueDate)){
-        let item = new ToDoItem(itemTitle, itemDueDate, itemCompleted);
+        let item = new ToDoItem(itemId, itemTitle, itemDueDate, itemCompleted);
         displayToDoItem(item);
         saveToDo(item);
     }   
+}
+
+function generateRandomNumber(){
+    return Math.floor(Math.random() * 999999);
 }
 
 /**
@@ -90,6 +97,7 @@ function getToDo() {
 function displayToDoItem(item:ToDoItem):void {
     let toDoItem = document.createElement("div")
     toDoItem.setAttribute("class", "todo")
+    toDoItem.setAttribute("id", item.id.toString())
 
     let toDoTitle = document.createElement("h3");
     toDoTitle.innerText = item.title;
@@ -113,7 +121,8 @@ function displayToDoItem(item:ToDoItem):void {
 function markAsComplete() {
     //Adds the div that was clicked to the "is-completed" div 
     getById("is-completed").appendChild(this);
-    this.isCompleted = true;
+    let clickedItem = GetClickedItem(this);
+    updateItems(clickedItem);
     //Removes the div that was clicked to the "is-completed" div 
     //getById("not-completed").removeChild(this);
 }
@@ -125,11 +134,15 @@ function saveToDo(item:ToDoItem):void{
     }
     currItems.push(item);
 
+    sendToLocalStroage(currItems);
+}
+
+const todokey = "todo"
+function sendToLocalStroage(currItems: ToDoItem[]) {
     let currItemsString = JSON.stringify(currItems);
     localStorage.setItem(todokey, currItemsString);
 }
 
-const todokey = "todo"
 /**
  * Get stored ToDo items or return null if none exist
  */
@@ -138,4 +151,34 @@ function getToDoItems():ToDoItem[]{
 
     let item:ToDoItem[] = JSON.parse(itemString);
     return item;
+}
+
+/**
+ * Updates the ToDoItem array in Locol Storage
+ * @param item The Item that will be updated
+ */
+function updateItems(item:ToDoItem) {
+    //Get the ToDoItem Array out of local storage
+    let itemArray:ToDoItem[] = getToDoItems();
+
+    for(let i = 0; i < itemArray.length; i++){
+        if(item.id == (itemArray[i].id)){
+            itemArray[i].isCompleted = true;
+        }
+        console.log(itemArray[i]);
+    }
+    sendToLocalStroage(itemArray);
+}
+
+/**
+ * Finds and retrieves the todo item that was clicked
+ * @param itemDiv 
+ */
+function GetClickedItem(itemDiv:HTMLElement):ToDoItem {
+    let itemArray:ToDoItem[] = getToDoItems();
+    for (let i = 0; i < itemArray.length; i++) {
+        if(itemDiv.getAttribute("id") == itemArray[i].id.toString()){
+            return itemArray[i];
+        }
+    }
 }
